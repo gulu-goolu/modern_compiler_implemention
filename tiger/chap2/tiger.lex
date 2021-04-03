@@ -18,11 +18,11 @@ void adjust(void) {
 %}
 
 %%
-" "	                                {adjust(); continue;}
+" "                                 {adjust(); continue;}
 "\t"                                {adjust(); continue;}
 "\n"                                {adjust(); EM_newline(); continue;}
 "\r"                                {adjust(); continue;}
-","	                                {adjust(); return COMMA;}
+","                                 {adjust(); return COMMA;}
 :                                   {adjust(); return COLON;}
 ";"                                 {adjust(); return SEMICOLON;}
 "("                                 {adjust(); return LPAREN;}
@@ -66,4 +66,4 @@ nil                                 {adjust(); return NIL;}
 [_a-zA-Z][_a-zA-Z0-9]*              {adjust(); yylval.sval = yytext; return ID;}
 \"(\\.|[^"\\])*\"                   {adjust(); yylval.sval = yytext; return STRING;}
 "/*"([^\*]|(\*)*[^\*/])*(\*)*"*/"   {adjust(); continue;}
-.	                                {adjust(); EM_error(EM_tokPos,"illegal token");}
+.                                   {adjust(); EM_error(EM_tokPos,"illegal token");}
