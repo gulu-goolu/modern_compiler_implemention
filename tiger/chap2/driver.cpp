@@ -1,9 +1,9 @@
-#include <stdio.h>
+#include <cstdio>
+#include <cstdlib>
 
 #include "errormsg.h"
 #include "tokens.h"
 #include "util.h"
-
 
 YYSTYPE yylval;
 
@@ -18,7 +18,7 @@ string toknames[] = {
     "IN",     "END",    "OF",     "BREAK",  "NIL",    "FUNCTION",  "VAR",
     "TYPE"};
 
-string tokname(tok) {
+string tokname(int tok) {
   return tok < 257 || tok > 299 ? "BAD_TOKEN" : toknames[tok - 257];
 }
 

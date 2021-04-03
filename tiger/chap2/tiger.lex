@@ -6,12 +6,11 @@
 
 int charPos=1;
 
-int yywrap(void)
+extern "C" int yywrap(void)
 {
  charPos=1;
  return 1;
 }
-
 
 void adjust(void)
 {
@@ -22,11 +21,11 @@ void adjust(void)
 %}
 
 %%
-" "	 {adjust(); continue;}
-\n	 {adjust(); EM_newline(); continue;}
-","	 {adjust(); return COMMA;}
-for  	 {adjust(); return FOR;}
-[0-9]+	 {adjust(); yylval.ival=atoi(yytext); return INT;}
-.	 {adjust(); EM_error(EM_tokPos,"illegal token");}
-
+" "	                        {adjust(); continue;}
+\n	                        {adjust(); EM_newline(); continue;}
+","	                        {adjust(); return COMMA;}
+for  	                    {adjust(); return FOR;}
+[0-9]+	                    {adjust(); yylval.ival=atoi(yytext); return INT;}
+.	                        {adjust(); EM_error(EM_tokPos,"illegal token");}
+[_a-zA-Z]+[_a-zA-Z]*        {adjust(); return ID;}
 

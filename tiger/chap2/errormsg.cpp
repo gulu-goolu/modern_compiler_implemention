@@ -10,8 +10,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "util.h"
-
 bool anyErrors = FALSE;
 
 static string fileName = "";
@@ -28,7 +26,7 @@ typedef struct intList {
 } * IntList;
 
 static IntList intList(int i, IntList rest) {
-  IntList l = checked_malloc(sizeof *l);
+  IntList l = static_cast<IntList>(checked_malloc(sizeof *l));
   l->i = i;
   l->rest = rest;
   return l;
@@ -41,7 +39,7 @@ void EM_newline(void) {
   linePos = intList(EM_tokPos, linePos);
 }
 
-void EM_error(int pos, char *message, ...) {
+void EM_error(int pos, const char *message, ...) {
   va_list ap;
   IntList lines = linePos;
   int num = lineNum;
