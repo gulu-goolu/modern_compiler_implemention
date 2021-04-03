@@ -46,7 +46,7 @@ void adjust(void) {
 "|"                                 {adjust(); return OR;}
 ":="                                {adjust(); return ASSIGN;}
 while                               {adjust(); return WHILE;}
-for  	                              {adjust(); return FOR;}
+for  	                            {adjust(); return FOR;}
 to                                  {adjust(); return TO;}
 break                               {adjust(); return BREAK;}
 let                                 {adjust(); return LET;}
@@ -66,4 +66,4 @@ nil                                 {adjust(); return NIL;}
 [_a-zA-Z][_a-zA-Z0-9]*              {adjust(); yylval.sval = yytext; return ID;}
 \"(\\.|[^"\\])*\"                   {adjust(); yylval.sval = yytext; return STRING;}
 "/*"([^\*]|(\*)*[^\*/])*(\*)*"*/"   {adjust(); continue;}
-.	                                  {adjust(); EM_error(EM_tokPos,"illegal token");}
+.	                                {adjust(); EM_error(EM_tokPos,"illegal token");}
