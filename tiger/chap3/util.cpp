@@ -18,7 +18,7 @@ void *checked_malloc(int len) {
 }
 
 const char *String(char *s) {
-  const char *p = static_cast<const char *>(checked_malloc(strlen(s) + 1));
+  char *p = static_cast<char *>(checked_malloc(strlen(s) + 1));
   strcpy(p, s);
   return p;
 }

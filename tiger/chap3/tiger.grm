@@ -15,8 +15,8 @@ void yyerror(char *s)
 %union {
 	int pos;
 	int ival;
-	string sval;
-	}
+	const char* sval;
+}
 
 %token <sval> ID STRING
 %token <ival> INT

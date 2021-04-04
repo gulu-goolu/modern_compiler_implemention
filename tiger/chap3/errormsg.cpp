@@ -11,13 +11,9 @@
 #include <stdlib.h>
 
 bool anyErrors = FALSE;
-
 static const char *fileName = "";
-
 static int lineNum = 1;
-
 int EM_tokPos = 0;
-
 extern FILE *yyin;
 
 typedef struct intList {
@@ -39,7 +35,7 @@ void EM_newline(void) {
   linePos = intList(EM_tokPos, linePos);
 }
 
-void EM_error(int pos, char *message, ...) {
+void EM_error(int pos, const char *message, ...) {
   va_list ap;
   IntList lines = linePos;
   int num = lineNum;
