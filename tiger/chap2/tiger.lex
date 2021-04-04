@@ -1,7 +1,7 @@
 %{
 #include <string.h>
 #include "util.h"
-#include "yy.tab.hpp" // generate by yacc
+#include "tokens.h"
 #include "errormsg.h"
 
 int charPos = 1;
