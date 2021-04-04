@@ -5,12 +5,10 @@
 
 int yylex(void); /* function prototype */
 
-void yyerror(char *s)
-{
- EM_error(EM_tokPos, "%s", s);
+void yyerror(const char *s) {
+  EM_error(EM_tokPos, "%s", s);
 }
 %}
-
 
 %union {
 	int pos;
