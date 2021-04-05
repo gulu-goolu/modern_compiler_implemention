@@ -21,7 +21,7 @@ void adjust(void) {
 " "                                 {adjust(); continue;}
 "\t"                                {adjust(); continue;}
 "\n"                                {adjust(); EM_newline(); continue;}
-"\r"                                {adjust(); continue;}
+"\r"                                {continue;}
 ","                                 {adjust(); return COMMA;}
 :                                   {adjust(); return COLON;}
 ";"                                 {adjust(); return SEMICOLON;}

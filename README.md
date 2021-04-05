@@ -6,4 +6,8 @@
 
 ## 构建
 
-首先要安装 flex, bison 等工具
+首先要安装 flex, bison, cmake 等工具
+
+```
+sudo apt install -y flex bison
+```
