@@ -19,6 +19,7 @@ void yyerror(const char *s) {
 %token <sval> ID STRING
 %token <ival> INT
 
+ /* 终结符 */
 %token
   COMMA COLON SEMICOLON LPAREN RPAREN LBRACK RBRACK
   LBRACE RBRACE DOT
@@ -30,8 +31,130 @@ void yyerror(const char *s) {
 
 %start program
 
+ /* 优先级 */
+%left SEMICOLON
+%nonassoc DO
+%nonassoc LOWER
+%nonassoc TYPE
+%nonassoc FUNCTION
+%nonassoc OF
+%nonassoc LOW
+%nonassoc  ELSE
+%right ASSIGN
+%left OR
+%left AND
+%nonassoc EQ NEQ LT LE GT GE
+%left PLUS MINUS
+%left TIMES DIVIDE
+%nonassoc UMINUS
+%left DOT LBRACK 
+
 %%
 
-program:	exp
+program: exp
 
-exp:   ID
+exp: lvalue
+   | literal
+   | LPAREN expseq RPAREN
+   | negval
+   | func
+   | arithmetic
+   | compare
+   | bool
+   | assign
+   | rec
+   | arr
+   | if
+   | while
+   | for
+   | break
+   | let
+
+/* 左值 */
+lvalue: ID
+      | lvalue DOT ID
+      | lvalue LBRACK exp RBRACK
+
+/* 字面值 */
+literal: NIL
+       | INT
+       | STRING
+
+/* 序列 */
+expseq: 
+      | exp explastseq
+explastseq: 
+          |explastseq SEMICOLON exp
+
+negval: MINUS exp %prec UMINUS
+
+/* 函数调用 */
+func: ID LPAREN argseq RPAREN
+argseq: 
+      | exp argseqlast
+argseqlast: 
+          | argseqlast COMMA exp
+
+/* 算数操作 */
+arithmetic: exp PLUS exp
+          | exp MINUS exp
+          | exp TIMES exp
+          | exp DIVIDE exp
+
+/* 比较 */
+compare: exp EQ exp
+       | exp NEQ exp
+       | exp GT exp
+       | exp GE exp
+       | exp LT exp
+       | exp LE exp
+
+/* 布尔运算 */
+bool: exp AND exp
+    | exp OR exp
+
+/* 记录创建 */
+rec: ID NIL
+   | ID LBRACE recitemseq RBRACE
+recitem: ID EQ exp 
+recitemseq: 
+          | recitem recitemseqlast
+recitemseqlast: 
+              | recitemseqlast COMMA recitem
+
+/* 数组创建 */
+arr: ID LBRACK exp RBRACK OF exp
+
+/* 赋值 */
+assign: lvalue ASSIGN exp %prec ASSIGN
+
+/* if-then-else */
+if: IF exp THEN exp ELSE exp
+  | IF exp THEN exp
+
+while: WHILE exp DO exp
+
+for: FOR ID ASSIGN exp TO exp DO exp
+
+break: BREAK
+
+/* let 语句 */
+let: LET decs IN expseq END
+decs:
+    | decs dec
+dec: tydec
+   | vardec
+   | fundec
+tydec: TYPE ID EQ ty
+ty: ID
+  | LBRACE tyfields RBRACE
+  | ARRAY OF ID
+tyfield: ID COLON ID
+tyfields:
+        | tyfield tylastfields
+tylastfields: 
+            | tylastfields COMMA ID COLON ID
+vardec: VAR ID ASSIGN exp
+      | VAR ID COLON ID ASSIGN exp
+fundec: FUNCTION ID LPAREN tyfields RPAREN EQ exp
+      | FUNCTION ID LPAREN tyfields RPAREN COLON ID EQ exp

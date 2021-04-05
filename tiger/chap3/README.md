@@ -24,6 +24,11 @@ ty -> type-id
    -> array of type-id
 ```
 
-## 左结合、右结合、不可结合分别是啥意思
+## 左结合、右结合、不可结合的区别
 
+https://blog.csdn.net/sgzwiz/article/details/7426448
 
+## LL 分析和 LR 分析的区别
+
+LL 分析：从左至右分析、最左推导和超前查看 k 个符号
+LR 分析：从左至右分析、最右推导、超前查看 k 个符号
