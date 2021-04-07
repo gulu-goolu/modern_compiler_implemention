@@ -36,8 +36,8 @@ void yyerror(const char *s) {
 %nonassoc DO
 %nonassoc LOWER
 %nonassoc TYPE
-%nonassoc FUNCTION
-%nonassoc OF
+%nonassoc FUNCTION IF
+%nonassoc OF THEN
 %nonassoc LOW
 %nonassoc  ELSE
 %right ASSIGN
@@ -71,9 +71,10 @@ exp: lvalue
    | let
 
 /* 左值 */
-lvalue: ID
-      | lvalue DOT ID
-      | lvalue LBRACK exp RBRACK
+lvalue: ID lvalueTail
+lvalueTail: DOT ID lvalueTail
+          | LBRACK exp RBRACK lvalueTail
+          | 
 
 /* 字面值 */
 literal: NIL
