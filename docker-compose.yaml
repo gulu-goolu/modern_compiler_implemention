@@ -1,0 +1,14 @@
+---
+version: '3.9'
+services:
+  tiger:
+    build:
+      context: ./docker
+      args: 
+        - UID=1000
+        - GID=1000
+    command:
+      - /sbin/init
+    volumes: 
+        - ./:/tiger
+    working_dir: /tiger
