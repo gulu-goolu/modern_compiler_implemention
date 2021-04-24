@@ -6,8 +6,10 @@
 
 ## 构建
 
-首先要安装 flex, bison, cmake 等工具
+```
+git clone https://github.com/murmur-wheel/modern_compiler_implemention.git
+cd modern_compiler_implemention
+docker-compuse up -d
+```
 
-```
-sudo apt install -y flex bison
-```
+然后用 vscode attach 到容器内开发
