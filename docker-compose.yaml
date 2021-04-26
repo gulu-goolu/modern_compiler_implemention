@@ -5,8 +5,9 @@ services:
     build:
       context: ./docker
       args: 
-        - UID=1000
-        - GID=1000
+        # 通过环境变量传入， export UID=$(id --user) GID=$(id --group)
+        - UID
+        - GID
     command:
       - /sbin/init
     volumes: 
