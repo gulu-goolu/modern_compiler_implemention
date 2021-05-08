@@ -15,7 +15,7 @@ file(GLOB_RECURSE srcs "*.h" "*.cpp")
 add_executable(parsetest ${srcs} 
     ${CMAKE_CURRENT_BINARY_DIR}/yy.tab.cpp 
     ${CMAKE_CURRENT_BINARY_DIR}/lex.yy.cpp)
-target_include_directories(parsetest PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(parsetest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # 测试
 set(testcase_dir "${CMAKE_CURRENT_SOURCE_DIR}/../testcases")

@@ -19,7 +19,7 @@ void yyerror(char *s)
 %union {
 	int pos;
 	int ival;
-	string sval;
+	const char* sval;
 	A_var var;
 	A_exp exp;
 	/* et cetera */

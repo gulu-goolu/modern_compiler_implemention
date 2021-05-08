@@ -1,6 +1,7 @@
 %{
 #include <string.h>
 #include "util.h"
+#include "absyn.h"
 #include "yy.tab.hpp" // generate by yacc
 #include "errormsg.h"
 

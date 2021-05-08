@@ -22,7 +22,7 @@ struct TAB_table_ {
 };
 
 static binder Binder(void *key, void *value, binder next, void *prevtop) {
-  binder b = checked_malloc(sizeof(*b));
+  binder b = reinterpret_cast<binder>(checked_malloc(sizeof(*b)));
   b->key = key;
   b->value = value;
   b->next = next;
@@ -31,7 +31,7 @@ static binder Binder(void *key, void *value, binder next, void *prevtop) {
 }
 
 TAB_table TAB_empty(void) {
-  TAB_table t = checked_malloc(sizeof(*t));
+  TAB_table t = reinterpret_cast<TAB_table>(checked_malloc(sizeof(*t)));
   int i;
   t->top = NULL;
   for (i = 0; i < TABSIZE; i++) t->table[i] = NULL;
@@ -50,7 +50,7 @@ TAB_table TAB_empty(void) {
 void TAB_enter(TAB_table t, void *key, void *value) {
   int index;
   assert(t && key);
-  index = ((unsigned)key) % TABSIZE;
+  index = reinterpret_cast<unsigned long>(key) % TABSIZE;
   t->table[index] = Binder(key, value, t->table[index], t->top);
   t->top = key;
 }
@@ -59,7 +59,7 @@ void *TAB_look(TAB_table t, void *key) {
   int index;
   binder b;
   assert(t && key);
-  index = ((unsigned)key) % TABSIZE;
+  index = reinterpret_cast<unsigned long>(key) % TABSIZE;
   for (b = t->table[index]; b; b = b->next)
     if (b->key == key) return b->value;
   return NULL;
@@ -72,7 +72,7 @@ void *TAB_pop(TAB_table t) {
   assert(t);
   k = t->top;
   assert(k);
-  index = ((unsigned)k) % TABSIZE;
+  index = reinterpret_cast<unsigned long>(k) % TABSIZE;
   b = t->table[index];
   assert(b);
   t->table[index] = b->next;
@@ -82,7 +82,7 @@ void *TAB_pop(TAB_table t) {
 
 void TAB_dump(TAB_table t, void (*show)(void *key, void *value)) {
   void *k = t->top;
-  int index = ((unsigned)k) % TABSIZE;
+  int index = reinterpret_cast<unsigned long>(k) % TABSIZE;
   binder b = t->table[index];
   if (b == NULL) return;
   t->table[index] = b->next;
