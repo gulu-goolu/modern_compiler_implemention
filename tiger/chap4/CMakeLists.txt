@@ -1,6 +1,3 @@
-cmake_minimum_required(VERSION 3.20)
-project(tiger-chap4)
-
 add_custom_command(OUTPUT 
         ${CMAKE_CURRENT_BINARY_DIR}/yy.tab.cpp
         ${CMAKE_CURRENT_BINARY_DIR}/lex.yy.cpp
@@ -11,7 +8,22 @@ add_custom_command(OUTPUT
     COMMAND yacc -o "${CMAKE_CURRENT_BINARY_DIR}/yy.tab.cpp" -dv ${CMAKE_CURRENT_SOURCE_DIR}/tiger.grm
     COMMAND lex -o ${CMAKE_CURRENT_BINARY_DIR}/lex.yy.cpp ${CMAKE_CURRENT_SOURCE_DIR}/tiger.lex)
 
-file(GLOB_RECURSE srcs "*.h" "*.cpp")
+set(srcs
+    absyn.h
+    absyn.cpp
+    errormsg.cpp
+    errormsg.h
+    parse.h
+    parse.cpp
+    parsetest.cpp
+    prabsyn.h
+    prabsyn.cpp
+    symbol.h
+    symbol.cpp
+    table.h
+    table.cpp
+    util.h
+    util.cpp)
 add_executable(parsetest ${srcs} 
     ${CMAKE_CURRENT_BINARY_DIR}/yy.tab.cpp 
     ${CMAKE_CURRENT_BINARY_DIR}/lex.yy.cpp)
